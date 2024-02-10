@@ -21,7 +21,7 @@ const EmployeeTable: React.FC = () => {
           <button>Добавить</button>
         </div>
         <div className={css.tableBody}>
-          {checkEmploees && employees.map((employee) => <EmployeeItem employee={employee} />)}
+          {checkEmploees && employees.map((employee) => <EmployeeItem employee={employee} key={employee.id} />)}
         </div>
       </div>
     </div>
