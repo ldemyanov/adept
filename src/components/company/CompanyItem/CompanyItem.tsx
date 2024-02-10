@@ -20,11 +20,9 @@ const CompanyItem: React.FC<CompanyItemProps> = ({ company, isSelected = false }
   return (
     <div className={css.tableRow + selectedClass} key={id}>
       <div className={css.cell}>
-        <input type="checkbox" name="company1" />
+        <input type="checkbox" value={company.id} onChange={handleSelectCompany} checked={isSelected} />
       </div>
-      <div className={css.cell} onClick={handleSelectCompany}>
-        {name}
-      </div>
+      <div className={css.cell}>{name}</div>
       <div className={css.cell}>{employeeCount}</div>
       <div className={css.cell}>{address}</div>
     </div>
