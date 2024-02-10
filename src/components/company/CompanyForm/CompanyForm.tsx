@@ -22,7 +22,6 @@ const CompanyForm: React.FC<CompanyFormProps> = ({ isFormOpen, closeForm }) => {
       name,
       address,
       employeeCount: 0,
-      emoloyees: [],
     };
 
     dispatch(addCompany(company));
