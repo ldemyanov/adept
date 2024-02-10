@@ -25,7 +25,7 @@ const initialState = {
 } as CompanyState;
 
 const companySlice = createSlice({
-  name: 'counter',
+  name: 'company',
   initialState,
   reducers: {
     selectCompany: (state, action: PayloadAction<string>) => {

@@ -5,6 +5,10 @@
   gap: 10px;
 }
 
+.selectedTableRow {
+  background-color: #ebcdcd;
+}
+
 .cell {
   /* border: 1px solid silver; */
 }

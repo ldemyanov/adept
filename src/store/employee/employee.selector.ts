@@ -11,4 +11,15 @@ const selectCompanyEmployees = createSelector(
   }
 );
 
-export { selectCompanyEmployees };
+const checkEmployeesSelectedAll = createSelector(
+  [
+    (state: RootState) => state.employee.selectedEmployees,
+    (state: RootState) => state.employee.items,
+  ],
+  (selectedCompanies, companies) => {
+    return selectedCompanies.length === companies.length && selectedCompanies.length !== 0;
+  }
+);
+
+export { selectCompanyEmployees, checkEmployeesSelectedAll };
+

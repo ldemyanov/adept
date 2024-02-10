@@ -1,13 +1,15 @@
 import React from "react";
+import { clsx } from "clsx";
 import { useAppDispatch } from "../../../store";
 import css from "./Employee.module.css";
 import { Employee, removeEmployee } from "../../../store/employee/employee.slice";
 
 type EmployeeItemProps = {
   employee: Employee;
+  isSelected: boolean;
 };
 
-const EmployeeItem: React.FC<EmployeeItemProps> = React.memo(({ employee }) => {
+const EmployeeItem: React.FC<EmployeeItemProps> = React.memo(({ employee, isSelected }) => {
   const { firstName, lastName, position, id } = employee;
   const dispatch = useAppDispatch();
 
@@ -16,7 +18,7 @@ const EmployeeItem: React.FC<EmployeeItemProps> = React.memo(({ employee }) => {
   };
 
   return (
-    <div className={css.tableRow}>
+    <div className={clsx(css.tableRow, { [css.selectedTableRow]: isSelected })}>
       <div className={css.cell}>
         <input type="checkbox" name="company1" />
       </div>
