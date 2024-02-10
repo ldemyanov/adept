@@ -1,9 +1,13 @@
 import { useAppSelector } from "../../../store";
+import { selectCompanyEmployees } from "../../../store/company/company.selectors";
 import EmployeeItem from "../EmployeeItem/EmployeeItem";
 import css from "./EmployeeTable.module.css";
 
 const EmployeeTable: React.FC = () => {
-  const employees = useAppSelector((state) => state.employee.items.slice(0, 15));
+  const state = useAppSelector((state) => state);
+  const employees = selectCompanyEmployees(state);
+
+  const checkEmploees = employees && employees.length > 0;
 
   return (
     <div className={css.tableWrapper}>
@@ -17,9 +21,7 @@ const EmployeeTable: React.FC = () => {
           <button>Добавить</button>
         </div>
         <div className={css.tableBody}>
-          {employees.map((employee) => (
-            <EmployeeItem employee={employee}/>
-          ))}
+          {checkEmploees && employees.map((employee) => <EmployeeItem employee={employee} />)}
         </div>
       </div>
     </div>

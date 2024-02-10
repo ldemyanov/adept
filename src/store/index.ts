@@ -2,14 +2,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit';
 
 import companySlice from './company/company.slice';
-import employeeSlice from "./employee/employee.slice";
 
-type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 
 const store = configureStore({
   reducer: {
     company: companySlice,
-    employee: employeeSlice,
   },
 });
 

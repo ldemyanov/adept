@@ -1,5 +1,4 @@
-import { useAppDispatch } from "../../../store";
-import { Employee, removeEmployee } from "../../../store/employee/employee.slice";
+import { Employee } from "../../../store/company/company.slice";
 import css from "./Employee.module.css";
 
 type EmployeeItemProps = {
@@ -8,10 +7,9 @@ type EmployeeItemProps = {
 
 const EmployeeItem: React.FC<EmployeeItemProps> = ({ employee }) => {
   const { firstName, secondName, position, id } = employee;
-  const dispatch = useAppDispatch();
 
   const onHandleRemove: React.MouseEventHandler<HTMLButtonElement> = () => {
-    dispatch(removeEmployee(id));
+    console.log(":: onHandleRemove id::", id);
   };
 
   return (
