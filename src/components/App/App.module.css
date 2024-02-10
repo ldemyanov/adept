@@ -5,5 +5,5 @@
   min-height: 500px;
   background: #f3f3f3;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }

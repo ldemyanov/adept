@@ -13,22 +13,24 @@ type EmployeeFormProps = {
 const EmployeeForm: React.FC<EmployeeFormProps> = ({ isFormOpen, closeForm }) => {
   const dispatch = useDispatch();
 
-  const companyId = useAppSelector((state) => state.company.selectedCompany);
+  const companyId = useAppSelector((state) => state.company.selectedCompanies);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [position, setPosition] = useState("");
 
   const onHandleModalAccept = () => {
-    if (!firstName.length || !lastName.length || !position.length || !companyId) return;
+    if (!firstName.length || !lastName.length || !position.length || !companyId.length) return;
 
     const employee: Employee = {
       id: uuidv4(),
       firstName: firstName,
       lastName: lastName,
       position: position,
-      companyId: companyId,
+      companyId: companyId[0],
     };
+
+    // Временно сделано добавление в первую компанию
 
     dispatch(addEmployee(employee));
     closeForm();

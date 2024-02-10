@@ -5,7 +5,7 @@ import { CompanyItem } from "../CompanyItem";
 import css from "./CompanyTable.module.css";
 
 const CompanyTable: React.FC = () => {
-  const companies = useAppSelector((state) => state.company.items);
+  const { items: companies, selectedCompanies } = useAppSelector((state) => state.company);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const onHandleAdd: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -30,14 +30,13 @@ const CompanyTable: React.FC = () => {
           </div>
           <div className={css.tableBody}>
             {companies.map((company) => (
-              <CompanyItem company={company} key={company.id} />
+              <CompanyItem company={company} key={company.id} isSelected={selectedCompanies.includes(company.id)} />
             ))}
           </div>
         </div>
       </div>
       <CompanyForm isFormOpen={isAddModalOpen} closeForm={onHandleModalClose} />
     </>
-    
   );
 };
 

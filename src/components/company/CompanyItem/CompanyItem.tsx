@@ -4,9 +4,10 @@ import css from "./CompanyItem.module.css";
 
 type CompanyItemProps = {
   company: Company;
+  isSelected?: boolean;
 };
 
-const CompanyItem: React.FC<CompanyItemProps> = ({ company }) => {
+const CompanyItem: React.FC<CompanyItemProps> = ({ company, isSelected = false }) => {
   const { id, address, employeeCount, name } = company;
   const dispatch = useAppDispatch();
 
@@ -14,8 +15,10 @@ const CompanyItem: React.FC<CompanyItemProps> = ({ company }) => {
     dispatch(selectCompany(id));
   };
 
+  const selectedClass = isSelected ? ` ${css.activeTableRow}` : "";
+
   return (
-    <div className={css.tableRow} key={id}>
+    <div className={css.tableRow + selectedClass} key={id}>
       <div className={css.cell}>
         <input type="checkbox" name="company1" />
       </div>
