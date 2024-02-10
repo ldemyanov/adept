@@ -1,0 +1,9 @@
+.wrapper {
+  max-width: 1400px;
+  width: 100%;
+  margin: 50px auto;
+  min-height: 500px;
+  background: #f3f3f3;
+  display: flex;
+  justify-content: space-around;
+}

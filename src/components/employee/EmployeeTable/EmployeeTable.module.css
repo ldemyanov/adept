@@ -1,0 +1,26 @@
+.tableTitle {
+}
+
+.tableWrapper {
+  background-color: rgb(175, 186, 235);
+  padding: 10px;
+  width: 700px;
+}
+
+.table {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tableHead {
+  display: flex;
+  gap: 10px;
+}
+
+.tableBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

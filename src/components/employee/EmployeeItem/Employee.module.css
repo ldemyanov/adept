@@ -1,0 +1,10 @@
+.tableRow {
+  display: grid;
+  grid-template-columns: 30px 1fr 1fr 1fr 30px;
+  width: 100%;
+  gap: 10px;
+}
+
+.cell {
+  /* border: 1px solid silver; */
+}
