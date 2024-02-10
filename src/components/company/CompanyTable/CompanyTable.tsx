@@ -3,10 +3,17 @@ import { useAppSelector } from "../../../store";
 import CompanyForm from "../CompanyForm/CompanyForm";
 import { CompanyItem } from "../CompanyItem";
 import css from "./CompanyTable.module.css";
+import { checkSelectedAll } from "../../../store/company/company.selectors";
+import { useDispatch } from "react-redux";
+import { selectAllCompanies } from "../../../store/company/company.slice";
 
 const CompanyTable: React.FC = () => {
   const { items: companies, selectedCompanies } = useAppSelector((state) => state.company);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const state = useAppSelector((state) => state);
+  const isSelectedAll = checkSelectedAll(state);
+  const dispatch = useDispatch();
 
   const onHandleAdd: React.MouseEventHandler<HTMLButtonElement> = () => {
     setIsAddModalOpen(true);
@@ -16,6 +23,10 @@ const CompanyTable: React.FC = () => {
     setIsAddModalOpen(false);
   };
 
+  const onSelectAll = () => {
+    dispatch(selectAllCompanies());
+  };
+
   return (
     <>
       <div className={css.tableWrapper}>
@@ -23,7 +34,13 @@ const CompanyTable: React.FC = () => {
         <div className={css.table}>
           <div className={css.tableHead}>
             <div>
-              <input type="checkbox" name="allСompanies" id="allСompanies" />
+              <input
+                type="checkbox"
+                name="allСompanies"
+                id="allСompanies"
+                checked={isSelectedAll}
+                onChange={onSelectAll}
+              />
               <label htmlFor="allСompanies">Выбрать все</label>
             </div>
             <button onClick={onHandleAdd}>Добавить</button>

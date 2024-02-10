@@ -40,9 +40,17 @@ const companySlice = createSlice({
     },
     removeCompony: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((company) => company.id !== action.payload);
-    }
+    },
+    selectAllCompanies: (state) => {
+      if (state.selectedCompanies.length === state.items.length) {
+        state.selectedCompanies = []
+        return
+      }
+      // TODO: когда будет реализована динамическая подгузка, то выбирать не все, а только загруженные
+      state.selectedCompanies = state.items.map(({ id }) => id)
+    },
   },
 })
 
 export default companySlice.reducer;
-export const { selectCompany, addCompany } = companySlice.actions;
+export const { selectCompany, addCompany, selectAllCompanies } = companySlice.actions;
