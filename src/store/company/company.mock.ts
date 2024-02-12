@@ -10,13 +10,13 @@ const mockCompanies: Company[] = [
   {
     id: "2",
     name: 'XYZ Inc.',
-    employeeCount: 5,
+    employeeCount: 14,
     address: '456 Elm Street',
   },
   {
     id: "3",
     name: 'Smith & Co.',
-    employeeCount: 14,
+    employeeCount: 64,
     address: '789 Oak Avenue',
   },
   {

@@ -1,61 +1,53 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppSelector } from "../../../store";
 import EmployeeForm from "../EmployeeForm/EmployeeForm";
 import EmployeeItem from "../EmployeeItem/EmployeeItem";
 import css from "./EmployeeTable.module.css";
-import { checkEmployeesSelectedAll, selectCompanyEmployees } from "../../../store/employee/employee.selector";
-import { useDispatch } from "react-redux";
 import {
-  // getNextPage,
-  selectAllEmployees,
-} from "../../../store/employee/employee.slice";
+  checkEmployeesSelectedAll,
+  getDisplayedEmployees,
+  checkScrollFinish,
+} from "../../../store/employee/employee.selector";
+import { useDispatch } from "react-redux";
+import { increaseСountShowedItems, selectAllEmployees } from "../../../store/employee/employee.slice";
 
 const EmployeeTable: React.FC = () => {
-  const refTableBody = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
-
-  const state = useAppSelector((state) => state);
-  const employees = selectCompanyEmployees(state);
-  const isSelectedAll = checkEmployeesSelectedAll(state);
-
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const refTableBody = useRef<HTMLDivElement>(null);
 
-  const onHandleAdd: React.MouseEventHandler<HTMLButtonElement> = () => {
-    setIsAddModalOpen(true);
-  };
+  const dispatch = useDispatch();
+  const state = useAppSelector((state) => state);
+  const isSelectedAll = checkEmployeesSelectedAll(state);
+  const isScrollFinish = checkScrollFinish(state);
+  const employees = getDisplayedEmployees(state);
 
-  const onHandleModalClose = () => {
-    setIsAddModalOpen(false);
-  };
+  const onHandleAdd = () => setIsAddModalOpen(true);
 
-  const onSelectAll = () => {
-    dispatch(selectAllEmployees());
-  };
+  const onHandleModalClose = () => setIsAddModalOpen(false);
 
-  // useEffect(() => {
-  //   const onScroll = () => {
-  //     if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-  //       dispatch(getNextPage())
-  //     }
-  //   }
+  const onSelectAll = () => dispatch(selectAllEmployees());
 
-  //   window.addEventListener('scroll', onScroll, false);
+  const onScroll = useCallback(() => {
+    const block = refTableBody.current;
+    if (!block) return;
 
-  //   return () => window.removeEventListener('scroll', onScroll);
-  // }, [dispatch])
+    const currentScrollPosition = block.scrollTop + block.clientHeight;
+    const triggerScrollPosition = block.scrollHeight - block.scrollTop / 4;
+
+    if (currentScrollPosition >= triggerScrollPosition && !isScrollFinish) {
+      dispatch(increaseСountShowedItems());
+    }
+  }, [dispatch, isScrollFinish]);
 
   useEffect(() => {
     const block = refTableBody.current;
-    if (block) {
-      block.addEventListener("scroll", () => {
-        // block.scrollHeight = block.clientHeight + block.scrollTop
+    if (!block) return;
 
-        console.log(block.clientHeight, block.scrollHeight, block.scrollTop);
-      });
-    }
+    block.removeEventListener("scroll", onScroll);
+    block.addEventListener("scroll", onScroll);
 
-    // return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    return () => block.removeEventListener("scroll", onScroll);
+  }, [onScroll]);
 
   const isExistEmploees = employees && employees.length > 0;
 
@@ -78,14 +70,7 @@ const EmployeeTable: React.FC = () => {
             <button onClick={onHandleAdd}>Добавить</button>
           </div>
           <div ref={refTableBody} className={css.tableBody}>
-            {isExistEmploees &&
-              employees.map((employee) => (
-                <EmployeeItem
-                  employee={employee}
-                  key={employee.id}
-                  // isSelected={selectedEmployees.includes(employee.id)}
-                />
-              ))}
+            {isExistEmploees && employees.map((employee) => <EmployeeItem employee={employee} key={employee.id} />)}
           </div>
         </div>
       </div>

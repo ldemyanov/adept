@@ -10,20 +10,24 @@ export type Employee = {
   position: string;
 }
 
-export const EMPLOYEE_PER_ITEMS = 15;
+const EMPLOYEE_PER_ITEMS = 12;
 
 type EmployeeState = {
   items: Employee[],
-  displayedItems: Employee[],
+  filteredItems: Employee[],
   selectedEmployees: string[],
   currentPage: number,
+  countShowedItems: number,
+  employeePerItems: number,
 }
 
 const initialState = {
   items: mockEmployes,
-  displayedItems: [],
+  filteredItems: [],
   selectedEmployees: [],
-  currentPage: 1,
+  currentPage: 0,
+  countShowedItems: EMPLOYEE_PER_ITEMS,
+  employeePerItems: EMPLOYEE_PER_ITEMS,
 } as EmployeeState;
 
 const employeeSlice = createSlice({
@@ -45,8 +49,8 @@ const employeeSlice = createSlice({
     },
     selectAllEmployees: (state) => {
       if (state.selectedEmployees.length === state.items.length) {
-        state.selectedEmployees = []
-        return
+        state.selectedEmployees = [];
+        return;
       }
       state.selectedEmployees = state.items.map(({ id }) => id)
     },
@@ -68,11 +72,18 @@ const employeeSlice = createSlice({
         employee.position = action.payload.position;
       }
     },
-    // getNextPage: (state) => {
-    //   const start = state.currentPage * PER_ITEMS
-    //   state.items.push(...mockEmployes.slice(start, start + PER_ITEMS))
-    //   state.currentPage += 1
-    // },
+    updateDisplayedItems: (state, action: PayloadAction<{ companyIds: string[] }>) => {
+      state.filteredItems = state.items.filter((employee) => {
+        return action.payload.companyIds.includes(employee.companyId)
+      });
+
+      if (state.filteredItems.length <= state.countShowedItems) {
+        state.countShowedItems = Math.max(state.filteredItems.length, state.employeePerItems);
+      }
+    },
+    increaseСountShowedItems: (state) => {
+      state.countShowedItems += state.employeePerItems;
+    }
   },
 })
 
@@ -81,9 +92,10 @@ export const {
   removeEmployee,
   addEmployee,
   selectAllEmployees,
-  // getNextPage,
   changeFirstName,
   changeLastNameName,
   changePosition,
-  selectEmployee
+  selectEmployee,
+  updateDisplayedItems,
+  increaseСountShowedItems
 } = employeeSlice.actions;
