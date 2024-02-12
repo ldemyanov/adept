@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import Modal from "../../modal/Modal";
+import Modal from "../../ui/Modal/Modal";
 import { Company, addCompany } from "../../../store/company/company.slice";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";

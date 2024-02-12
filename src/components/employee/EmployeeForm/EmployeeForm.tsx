@@ -1,9 +1,10 @@
 import { useDispatch } from "react-redux";
-import Modal from "../../modal/Modal";
+import Modal from "../../ui/Modal/Modal";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Employee, addEmployee } from "../../../store/employee/employee.slice";
 import { useAppSelector } from "../../../store";
+import { changeEmployeeCount } from "../../../store/company/company.slice";
 
 type EmployeeFormProps = {
   isFormOpen: boolean;
@@ -30,9 +31,8 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ isFormOpen, closeForm }) =>
       companyId: companyId[0],
     };
 
-    // Временно сделано добавление в первую компанию
-
     dispatch(addEmployee(employee));
+    dispatch(changeEmployeeCount({ id: companyId[0], increment: 1 }));
     closeForm();
   };
 

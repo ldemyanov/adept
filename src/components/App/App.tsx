@@ -6,8 +6,6 @@ import { useAppSelector } from "../../store";
 const App: React.FC = () => {
   const selectedCompanies = useAppSelector((state) => state.company.selectedCompanies);
 
-  console.log(":: selectedCompanies ::", selectedCompanies);
-
   return (
     <div className={css.wrapper}>
       <CompanyTable />

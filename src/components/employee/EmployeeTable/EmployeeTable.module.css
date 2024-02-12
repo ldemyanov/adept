@@ -1,26 +1,32 @@
 .tableTitle {
+  color: green;
 }
 
 .tableWrapper {
   background-color: rgb(175, 186, 235);
   padding: 10px;
-  width: 700px;
+  width: 500px;
+  height: 100%;
 }
 
 .table {
-  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: calc(100% - 40px);
 }
 
 .tableHead {
+  padding-top: 10px;
   display: flex;
   gap: 10px;
 }
 
 .tableBody {
+  border: 2px solid red;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: 100%;
+  overflow-y: auto;
 }

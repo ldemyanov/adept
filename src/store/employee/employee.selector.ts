@@ -1,13 +1,14 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "..";
-
-const companyId = (state: RootState) => state.company.selectedCompanies;
-const emoloyees = (state: RootState) => state.employee.items;
+import { EMPLOYEE_PER_ITEMS } from "./employee.slice";
 
 const selectCompanyEmployees = createSelector(
-  [companyId, emoloyees],
+  [
+    (state: RootState) => state.company.selectedCompanies,
+    (state: RootState) => state.employee.items,
+  ],
   (selectedCompanies, emoloyees) => {
-    return emoloyees.filter((emoloyee) => selectedCompanies.includes(emoloyee.companyId));
+    return emoloyees.filter((emoloyee) => selectedCompanies.includes(emoloyee.companyId)).slice(0, EMPLOYEE_PER_ITEMS);
   }
 );
 

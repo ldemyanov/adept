@@ -10,16 +10,12 @@ export type Company = {
 
 type CompanyState = {
   items: Company[],
-  selectedCompany: [],
-  selectedEmployee: [],
   selectedCompanies: string[],
   selectedEmployees: number[],
 }
 
 const initialState = {
   items: mockCompanies,
-  selectedCompany: [],
-  selectedEmployee: [],
   selectedCompanies: [],
   selectedEmployees: [],
 } as CompanyState;
@@ -30,27 +26,52 @@ const companySlice = createSlice({
   reducers: {
     selectCompany: (state, action: PayloadAction<string>) => {
       if (state.selectedCompanies.includes(action.payload)) {
-        state.selectedCompanies = state.selectedCompanies.filter((id) => id !== action.payload)
-        return
+        state.selectedCompanies = state.selectedCompanies.filter((id) => id !== action.payload);
+        return;
       }
-      state.selectedCompanies.push(action.payload)
+      state.selectedCompanies.push(action.payload);
     },
     addCompany: (state, action: PayloadAction<Company>) => {
       state.items.push(action.payload);
     },
-    removeCompony: (state, action: PayloadAction<string>) => {
+    removeCompany: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((company) => company.id !== action.payload);
     },
     selectAllCompanies: (state) => {
       if (state.selectedCompanies.length === state.items.length) {
-        state.selectedCompanies = []
-        return
+        state.selectedCompanies = [];
+        return;
       }
-      // TODO: когда будет реализована динамическая подгузка, то выбирать не все, а только загруженные
-      state.selectedCompanies = state.items.map(({ id }) => id)
+      state.selectedCompanies = state.items.map(({ id }) => id);
     },
+    changeCompanyName: (state, action: PayloadAction<{ id: string, name: string }>) => {
+      const company = state.items.find((company) => company.id === action.payload.id);
+      if (company) {
+        company.name = action.payload.name;
+      }
+    },
+    changeCompanyAdress: (state, action: PayloadAction<{ id: string, address: string }>) => {
+      const company = state.items.find((company) => company.id === action.payload.id);
+      if (company) {
+        company.address = action.payload.address;
+      }
+    },
+    changeEmployeeCount: (state, action: PayloadAction<{ id: string, increment: number }>) => {
+      const company = state.items.find((company) => company.id === action.payload.id);
+      if (company) {
+        company.employeeCount += action.payload.increment;
+      }
+    }
   },
 })
 
 export default companySlice.reducer;
-export const { selectCompany, addCompany, selectAllCompanies } = companySlice.actions;
+export const {
+  selectCompany,
+  addCompany,
+  selectAllCompanies,
+  changeCompanyAdress,
+  changeCompanyName,
+  removeCompany,
+  changeEmployeeCount
+} = companySlice.actions;
